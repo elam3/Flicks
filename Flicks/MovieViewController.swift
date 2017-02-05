@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFNetworking
 
 class MovieViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -33,10 +34,14 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let movie = movies![indexPath.row]
         let title = movie["original_title"] as! String
-        let overview = movie["overview"] as!String
+        let overview = movie["overview"] as! String
+        let pathUrl = "http://image.tmdb.org/t/p/w500"
+        let posterPath = movie["poster_path"] as! String
+        let imageUrl = URL(string: pathUrl+posterPath)
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
+        cell.posterView.setImageWith(imageUrl!)
         
         return cell
     }
@@ -57,7 +62,7 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let data = data {
                 if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                    print(dataDictionary)
+                    //print(dataDictionary)
                     
                     self.movies = dataDictionary["results"] as? [NSDictionary]
                     self.tableView.reloadData()
