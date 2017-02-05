@@ -35,7 +35,7 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         let movie = movies![indexPath.row]
         let title = movie["original_title"] as! String
         let overview = movie["overview"] as! String
-        let pathUrl = "http://image.tmdb.org/t/p/w500"
+        let pathUrl = "https://image.tmdb.org/t/p/w500"
         let posterPath = movie["poster_path"] as! String
         let imageUrl = URL(string: pathUrl+posterPath)
         
