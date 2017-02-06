@@ -35,15 +35,21 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         
         let movie = movies![indexPath.row]
-        let title = movie["original_title"] as! String
-        let overview = movie["overview"] as! String
-        let pathUrl = "https://image.tmdb.org/t/p/w500"
-        let posterPath = movie["poster_path"] as! String
-        let imageUrl = URL(string: pathUrl+posterPath)
         
+        let title = movie["original_title"] as! String
         cell.titleLabel.text = title
+        
+        let overview = movie["overview"] as! String
         cell.overviewLabel.text = overview
-        cell.posterView.setImageWith(imageUrl!)
+        
+        let pathUrl = "https://image.tmdb.org/t/p/w500"
+        if let posterPath = movie["poster_path"] as? String {
+            let imageUrl = URL(string: pathUrl+posterPath)
+            cell.posterView.setImageWith(imageUrl!)
+        }
+        
+        
+        
         
         return cell
     }
@@ -109,14 +115,21 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)
+        let movie = movies?[(indexPath?.row)!]
+        
+        let detailViewController = segue.destination as! DetailViewController
+        detailViewController.movie = movie
+        
+        //print("Prepare for segment")
     }
-    */
 
 }
