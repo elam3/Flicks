@@ -18,6 +18,8 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     let refreshControl = UIRefreshControl()
     var endpoint: String = ""
     
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let movies = movies {
             return movies.count
@@ -49,7 +51,11 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
             cell.posterView.setImageWith(imageUrl!)
         }
         
-        
+        // Selected Style
+        //cell.setHighlighted(true, animated: true)
+        /*let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.cyan
+        cell.selectedBackgroundView = backgroundView*/
         
         
         return cell
@@ -131,6 +137,36 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         detailViewController.movie = movie
         
         //print("Prepare for segment")
+    }
+    
+    
+    // Selection & Highlight Effects
+
+    public func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.cellForRow(at: indexPath) as! MovieCell
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.yellow
+        cell.selectedBackgroundView = backgroundView
+    }
+
+    public func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! MovieCell
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.white
+        cell.selectedBackgroundView = backgroundView
+    }
+
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! MovieCell
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.cyan
+        cell.selectedBackgroundView = backgroundView
+    }
+    
+    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
     }
 
 }
